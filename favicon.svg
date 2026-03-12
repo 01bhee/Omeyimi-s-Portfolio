@@ -1,32 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0a2e18"/>
-      <stop offset="100%" stop-color="#061f10"/>
-    </linearGradient>
-    <linearGradient id="bunny" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2ee59d"/>
-      <stop offset="100%" stop-color="#7fffd4"/>
-    </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="0.8" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="48" fill="#a4e1bc" />
 
-  <!-- Rounded background -->
-  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+  <!-- Left Ear -->
+  <path d="M39 55 C22 15, 38 10, 48 40 Z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
+  <!-- Right Ear -->
+  <path d="M61 55 C78 15, 62 10, 52 40 Z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
 
-  <!-- Subtle inner border -->
-  <rect width="32" height="32" rx="7" fill="none" stroke="#2ee59d" stroke-width="0.6" stroke-opacity="0.3"/>
+  <!-- Inner Left Ear -->
+  <path d="M39 50 C29 25, 38 18, 44 40 Z" fill="#fcfcfc" stroke="#8ec8a3" stroke-width="2" />
+  <!-- Inner Right Ear -->
+  <path d="M61 50 C71 25, 62 18, 56 40 Z" fill="#fcfcfc" stroke="#8ec8a3" stroke-width="2" />
 
-  <!-- Cute minimalist bunny shape -->
-  <path
-    d="M13,6 C11.9,6 11,7 11,8 L11,13 C10,13.5 9.5,14 8,15.5 C7,16.5 7,18 7,19 C7,22 9.5,25 12.5,25 C14,25 15,24 16,24 C17,24 18,25 19.5,25 C22.5,25 25,22 25,19 C25,18 25,16.5 24,15.5 C22.5,14 22,13.5 21,13 L21,8 C21,7 20.1,6 19,6 C17.9,6 17,7 17,8 L17,11 C16.5,11 15.5,11 15,11 L15,8 C15,7 14.1,6 13,6 Z M11.5,18 C11.5,18.8 10.8,19.5 10,19.5 C9.2,19.5 8.5,18.8 8.5,18 C8.5,17.2 9.2,16.5 10,16.5 C10.8,16.5 11.5,17.2 11.5,18 Z M23.5,18 C23.5,18.8 22.8,19.5 22,19.5 C21.2,19.5 20.5,18.8 20.5,18 C20.5,17.2 21.2,16.5 22,16.5 C22.8,16.5 23.5,17.2 23.5,18 Z M16,21 C15.5,21 15,20.5 15,20 C15,19.5 15.5,19 16,19 C16.5,19 17,19.5 17,20 C17,20.5 16.5,21 16,21 Z"
-    fill="url(#bunny)"
-    filter="url(#glow)"
-  />
+  <!-- Head -->
+  <path d="M30 65 C25 45, 75 45, 70 65 C72 85, 28 85, 30 65 Z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
+
+  <!-- Eyes (Happy Arcs) -->
+  <path d="M38 58 Q42 54 46 58" fill="none" stroke="#8ec8a3" stroke-width="3" stroke-linecap="round" />
+  <path d="M54 58 Q58 54 62 58" fill="none" stroke="#8ec8a3" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Mouth -->
+  <!-- W shape -->
+  <path d="M43 65 Q46.5 70 50 66 Q53.5 70 57 65" fill="none" stroke="#8ec8a3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Nose line -->
+  <line x1="50" y1="65" x2="50" y2="62" stroke="#8ec8a3" stroke-width="3" stroke-linecap="round" />
 </svg>
