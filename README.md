@@ -1,38 +1,34 @@
 <div align="center">
-  <h1>✨ Omeyimi's Digital Portfolio</h1>
-  <p><b>Engineer | Robotics Enthusiast | AI Innovator</b></p>
+  <h1>Ωμ — Omeyimi's Portfolio</h1>
+  <p><b>Robotics &amp; Reinforcement Learning Engineer</b></p>
 
   <a href="https://omeyimi-s-portfolio.vercel.app/">
-    <img src="https://img.shields.io/badge/View_Live_Site-FFD700?style=for-the-badge&logo=google-chrome&logoColor=black" alt="Live Site">
+    <img src="https://img.shields.io/badge/View_Live_Site-5fbf8f?style=for-the-badge&logo=vercel&logoColor=black" alt="Live Site">
   </a>
 </div>
 
 ---
 
-## 🌟 Overview
-Welcome to the source code of my personal website! This project serves as a centralized hub for my professional journey, showcasing my work in **Robotics**, **Artificial Intelligence**, and **Embedded Systems**.
+## Overview
+Personal portfolio site for Omeyimi Mustapha, Computer Engineering student at Covenant University working on terrain-adaptive legged locomotion, curriculum reinforcement learning, and sim-to-real transfer.
 
-### 🛠️ Built With
-<div align="left">
-  <ul>
-    <li><b>Frontend:</b> HTML5, CSS3 (Custom animations & responsive design)</li>
-    <li><b>Logic:</b> JavaScript (ES6+)</li>
-    <li><b>Deployment:</b> GitHub Pages</li>
-    <li><b>Design Aesthetic:</b> Minimalist, Techy, and Calm</li>
-  </ul>
-</div>
+The identity mark **Ωμ** rewrites her initials as symbols from her own field: Ω (angular velocity / system state) for Omeyimi, μ (the friction coefficient) for Mustapha — the exact parameter that changes across the terrains in her research.
+
+### Built with
+- Single self-contained `index.html` — HTML, CSS custom properties, vanilla JS (no build step, no dependencies)
+- Dark/light theme toggle (persisted via `localStorage`)
+- Live-updating telemetry HUD, animated SVG gait cycle, scroll-reveal and scroll-progress, `prefers-reduced-motion` support throughout
+- Deployed on Vercel
 
 ---
 
-## 📂 Featured Projects
-This website highlights my key engineering milestones, including:
-* 🤖 **Self-balancing Robot** 
-* 🏥 **Line-following Robot** 
-* 📈 **Wall-following Turtilebot (Using ROS2, Gazebo and RViz)** 
+## Featured Research
+**Curriculum RL for Quadruped Terrain Adaptation** — trained a Boston Dynamics Spot quadruped in MuJoCo to walk and adapt across flat, rough, flooded, and snow terrain via a progressive curriculum, producing one generalized policy (flood-terrain traversal 17m → 122m, zero falls across all scenes).
 
----
-
-## 🎨 Design Philosophy
-The UI is inspired by my interest in circuitry, high-quality typography, and a "calm" user experience. It is designed to be fully responsive, ensuring a seamless experience from mobile devices to high-resolution monitors.
+## Other Projects
+- Self-Balancing Robot — ESP32 + MPU6050, real-time PID tilt correction
+- AI Glasses for the Visually Impaired — 2nd place, SHENOVATION Hackathon 2025
+- Facial Door Recognition System — Raspberry Pi + Pi Camera
+- Line-Following Robot — IR sensors + Arduino
 
 ---
