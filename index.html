@@ -38,8 +38,13 @@
     *{animation-duration:0.001s !important;animation-iteration-count:1 !important;transition-duration:0.001s !important;}
   }
   /* nav / side-nav */
-  .navlinks a:hover{color:var(--text);}
-  #themeToggle:hover{border-color:var(--border-hover);color:var(--text);}
+  #mainNav.scrolled{box-shadow:0 12px 34px -22px rgba(0,0,0,.6);}
+  .navlink::after{content:'';position:absolute;left:12px;right:12px;bottom:2px;height:2px;background:var(--accent);border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .35s;opacity:0;}
+  .navlink:hover{color:var(--text) !important;}
+  .navlink.active{color:var(--text) !important;}
+  .navlink.active::after{transform:scaleX(1);opacity:1;}
+  #themeToggle:hover{border-color:var(--border-hover);color:var(--text);transform:translateY(-1px);}
+  .hamburger:hover{border-color:var(--border-hover);transform:translateY(-1px);}
   .navdot{text-decoration:none;display:flex;align-items:center;gap:10px;justify-content:flex-end;}
   .navdot .dot{width:8px;height:8px;border-radius:50%;background:var(--mute);transition:all .3s;display:inline-block;}
   .navdot .label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mute);opacity:0;transform:translateX(6px);transition:all .3s;}
@@ -47,9 +52,19 @@
   .navdot.active .label{color:var(--accent);opacity:1;transform:translateX(0);}
   .cta-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px -8px var(--accent);}
   .cta-secondary:hover{border-color:var(--border-hover);background:var(--surface);}
-  .card-hover:hover{border-color:var(--border-hover);transform:translateY(-3px);}
+  .card-hover{transition:border-color .35s ease,transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;}
+  .card-hover:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 20px 40px -28px rgba(0,0,0,.55);}
   .link-accent:hover{color:var(--accent);}
-  .ach-item:hover{border-color:var(--border-hover);}
+  .ach-item{transition:border-color .3s ease,transform .3s ease;}
+  .ach-item:hover{border-color:var(--border-hover);transform:translateY(-2px);}
+  /* scroll cue */
+  .scroll-cue{animation:floaty 2.2s ease-in-out infinite;}
+  /* smooth accent scrollbar */
+  html{scrollbar-color:var(--border-hover) transparent;scrollbar-width:thin;}
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:6px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent);}
   /* responsive grids */
   @media (max-width:900px){
     .casegrid{grid-template-columns:1fr !important;}
@@ -69,9 +84,10 @@
   @media (max-width:900px){
     .sidenav{display:none !important;}
   }
-  @media (max-width:640px){
-    .navlinks{gap:14px !important;}
-    .navlinks a{font-size:12px !important;}
+  .hamburger{display:none;}
+  @media (max-width:760px){
+    .navlinks{display:none !important;}
+    .hamburger{display:flex !important;}
   }
 </style>
 </head>
@@ -84,23 +100,37 @@
   </div>
 
   <!-- NAV -->
-  <nav style="position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 32px;backdrop-filter:blur(14px);background:color-mix(in srgb, var(--bg) 72%, transparent);border-bottom:1px solid var(--border);transition:background .45s ease,border-color .45s ease;">
-    <a href="#home" style="text-decoration:none;display:flex;align-items:baseline;gap:2px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:.5px;color:var(--text);">
-      <span>Ω</span><span style="color:var(--accent);">μ</span>
+  <nav id="mainNav" style="position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;backdrop-filter:blur(14px);background:color-mix(in srgb, var(--bg) 72%, transparent);border-bottom:1px solid var(--border);transition:background .45s ease,border-color .45s ease,box-shadow .35s ease,padding .35s ease;">
+    <a href="#home" style="text-decoration:none;display:flex;align-items:center;gap:9px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;letter-spacing:.5px;color:var(--text);">
+      <span style="display:flex;align-items:baseline;gap:2px;"><span>Ω</span><span style="color:var(--accent);">μ</span></span>
+      <span aria-hidden="true" style="width:6px;height:6px;border-radius:50%;background:var(--stat);display:inline-block;animation:pulse 1.8s ease-in-out infinite;" title="system online"></span>
     </a>
-    <div style="display:flex;align-items:center;gap:28px;">
-      <div style="display:flex;gap:26px;" class="navlinks">
-        <a href="#about" style="text-decoration:none;color:var(--dim);font-size:13.5px;font-weight:500;letter-spacing:.3px;transition:color .2s;">About</a>
-        <a href="#skills" style="text-decoration:none;color:var(--dim);font-size:13.5px;font-weight:500;letter-spacing:.3px;transition:color .2s;">Skills</a>
-        <a href="#projects" style="text-decoration:none;color:var(--dim);font-size:13.5px;font-weight:500;letter-spacing:.3px;transition:color .2s;">Projects</a>
-        <a href="#achievements" style="text-decoration:none;color:var(--dim);font-size:13.5px;font-weight:500;letter-spacing:.3px;transition:color .2s;">Achievements</a>
-        <a href="#contact" style="text-decoration:none;color:var(--dim);font-size:13.5px;font-weight:500;letter-spacing:.3px;transition:color .2s;">Contact</a>
+    <div style="display:flex;align-items:center;gap:30px;">
+      <div style="display:flex;gap:2px;" class="navlinks">
+        <a href="#about" class="navlink" data-target="about" style="text-decoration:none;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;padding:8px 12px;position:relative;transition:color .25s;">About</a>
+        <a href="#skills" class="navlink" data-target="skills" style="text-decoration:none;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;padding:8px 12px;position:relative;transition:color .25s;">Skills</a>
+        <a href="#projects" class="navlink" data-target="projects" style="text-decoration:none;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;padding:8px 12px;position:relative;transition:color .25s;">Projects</a>
+        <a href="#achievements" class="navlink" data-target="achievements" style="text-decoration:none;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;padding:8px 12px;position:relative;transition:color .25s;">Achievements</a>
+        <a href="#contact" class="navlink" data-target="contact" style="text-decoration:none;color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;padding:8px 12px;position:relative;transition:color .25s;">Contact</a>
       </div>
-      <button id="themeToggle" aria-label="Toggle theme" style="cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;padding:8px 12px;border-radius:8px;transition:border-color .2s,color .2s;">
+      <button id="themeToggle" aria-label="Toggle theme" style="cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;padding:8px 12px;border-radius:8px;transition:border-color .2s,color .2s,transform .2s;">
         <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;"></span><span id="themeLabel">LIGHT</span>
+      </button>
+      <button id="menuToggle" class="hamburger" aria-label="Toggle menu" aria-expanded="false" style="cursor:pointer;background:var(--surface);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:8px;align-items:center;justify-content:center;transition:border-color .2s,transform .2s;">
+        <svg id="menuIconOpen" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="1" y1="4" x2="15" y2="4"></line><line x1="1" y1="8" x2="15" y2="8"></line><line x1="1" y1="12" x2="15" y2="12"></line></svg>
+        <svg id="menuIconClose" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="display:none;"><line x1="2" y1="2" x2="14" y2="14"></line><line x1="14" y1="2" x2="2" y2="14"></line></svg>
       </button>
     </div>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" style="position:fixed;top:0;left:0;right:0;z-index:99;background:var(--surface);border-bottom:1px solid var(--border);display:flex;flex-direction:column;padding:88px 32px 24px;gap:2px;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform .3s cubic-bezier(.2,.7,.2,1),opacity .3s ease;">
+    <a href="#about" style="text-decoration:none;color:var(--text);font-size:16px;font-weight:500;padding:14px 4px;border-bottom:1px solid var(--border);">About</a>
+    <a href="#skills" style="text-decoration:none;color:var(--text);font-size:16px;font-weight:500;padding:14px 4px;border-bottom:1px solid var(--border);">Skills</a>
+    <a href="#projects" style="text-decoration:none;color:var(--text);font-size:16px;font-weight:500;padding:14px 4px;border-bottom:1px solid var(--border);">Projects</a>
+    <a href="#achievements" style="text-decoration:none;color:var(--text);font-size:16px;font-weight:500;padding:14px 4px;border-bottom:1px solid var(--border);">Achievements</a>
+    <a href="#contact" style="text-decoration:none;color:var(--text);font-size:16px;font-weight:500;padding:14px 4px;">Contact</a>
+  </div>
 
   <!-- SIDE SCROLL NAV (desktop) -->
   <div style="position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:16px;" class="sidenav" id="sidenav">
@@ -113,7 +143,7 @@
   </div>
 
   <!-- ===================== HERO ===================== -->
-  <section id="home" style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 40px 80px;overflow:hidden;">
+  <section id="home" style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:clamp(80px,14vh,120px) 40px clamp(28px,6vh,80px);overflow:hidden;">
     <!-- watermark -->
     <div aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:1vw;pointer-events:none;user-select:none;overflow:hidden;">
       <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(300px,48vw,660px);line-height:.8;letter-spacing:-.03em;color:var(--text);opacity:0.10;white-space:nowrap;transform:translateY(6%);">
@@ -122,13 +152,13 @@
     </div>
 
     <div style="position:relative;max-width:1080px;margin:0 auto;width:100%;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:clamp(14px,3vh,28px);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;">
         <span style="width:26px;height:1px;background:var(--accent);display:inline-block;"></span>
         <span style="text-transform:none;">μ ∈ 𝒯</span> · terrain-adaptive locomotion
       </div>
-      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(44px,7vw,86px);line-height:1.02;letter-spacing:-.02em;margin:0 0 22px;color:var(--text);">Omeyimi Mustapha</h1>
-      <p style="font-family:'JetBrains Mono',monospace;font-size:clamp(13px,1.6vw,16px);color:var(--dim);margin:0 0 30px;letter-spacing:.4px;">Robotics &amp; Reinforcement Learning Engineer · Covenant University · Nigeria</p>
-      <p style="font-size:clamp(20px,2.6vw,30px);font-weight:400;line-height:1.35;max-width:720px;margin:0 0 44px;color:var(--text);text-wrap:pretty;">"I train legged robots to <span style="color:var(--accent);">adapt to terrain</span> they've never seen before."</p>
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(38px,6.2vw,78px);line-height:1.02;letter-spacing:-.02em;margin:0 0 clamp(12px,2.4vh,22px);color:var(--text);">Omeyimi Mustapha</h1>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:clamp(13px,1.6vw,16px);color:var(--dim);margin:0 0 clamp(14px,3vh,30px);letter-spacing:.4px;">Robotics &amp; Reinforcement Learning Engineer · Covenant University · Nigeria</p>
+      <p style="font-size:clamp(17px,2.2vw,26px);font-weight:400;line-height:1.35;max-width:720px;margin:0 0 clamp(20px,4vh,44px);color:var(--text);text-wrap:pretty;">"I train legged robots to <span style="color:var(--accent);">adapt to terrain</span> they've never seen before."</p>
       <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
         <a href="Omeyimi_Mustapha_CV.pdf" download class="cta-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#0d0f0d;font-weight:600;font-size:15px;padding:14px 24px;border-radius:10px;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px -8px var(--accent);">Download CV →</a>
         <a href="#contact" class="cta-secondary" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--text);font-weight:500;font-size:15px;padding:14px 24px;border-radius:10px;border:1px solid var(--border);transition:border-color .2s,background .2s;">Get in touch</a>
@@ -136,9 +166,9 @@
     </div>
 
     <!-- GAIT CYCLE + HUD -->
-    <div style="position:relative;max-width:1080px;margin:56px auto 0;width:100%;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div style="position:relative;max-width:1080px;margin:clamp(20px,5vh,56px) auto 0;width:100%;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;">
       <!-- quadruped -->
-      <svg viewBox="0 0 300 150" width="360" style="max-width:64%;overflow:visible;">
+      <svg viewBox="0 0 300 150" width="360" style="max-width:64%;width:clamp(200px,30vh,360px);overflow:visible;">
         <path d="M0 132 L34 130 L60 134 L92 129 L120 133 L150 131 L182 135 L214 130 L246 133 L276 131 L300 133" fill="none" stroke="var(--border-hover)" stroke-width="1.4" stroke-dasharray="3 5" style="animation:drift 5.5s linear infinite;"></path>
         <g style="animation:bob 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center;">
         <g fill="none" stroke="var(--text)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -179,6 +209,11 @@
         </div>
       </div>
     </div>
+
+    <a href="#about" aria-label="Scroll to explore" class="scroll-cue" style="position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--mute);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;">
+      scroll
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5 L7 10 L12 5"></path></svg>
+    </a>
   </section>
 
   <!-- terrain divider: flat -->
@@ -196,7 +231,7 @@
       </div>
       <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start;" class="aboutgrid">
         <div>
-          <p style="font-size:19px;line-height:1.6;color:var(--text);margin:0 0 20px;text-wrap:pretty;">Final-year Computer Engineering student at Covenant University (CGPA 4.20/5.00, graduating 2026). Hands-on experience in reinforcement learning for legged robotics, embedded systems, and control theory.</p>
+          <p style="font-size:19px;line-height:1.6;color:var(--text);margin:0 0 20px;text-wrap:pretty;">Final-year Computer Engineering student at Covenant University, graduating 2026. Hands-on experience in reinforcement learning for legged robotics, embedded systems, and control theory.</p>
           <p style="font-size:16px;line-height:1.65;color:var(--dim);margin:0;text-wrap:pretty;">Proficient in ROS2, Python, Linux, and Git; comfortable debugging across hardware and software stacks, from actuator calibration to policy training.</p>
         </div>
         <div style="border-left:1px solid var(--border);padding-left:24px;">
@@ -219,7 +254,7 @@
         <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;margin:0;">Skills</h2>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="skillsgrid">
-        <div class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;transition:border-color .3s,transform .3s;">
+        <div data-reveal class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase;margin-bottom:18px;">languages &amp; tools</div>
           <div style="display:flex;flex-wrap:wrap;gap:10px;">
             <span style="font-family:'JetBrains Mono',monospace;font-size:13px;padding:7px 13px;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);">Python</span>
@@ -231,7 +266,7 @@
             <span style="font-family:'JetBrains Mono',monospace;font-size:13px;padding:7px 13px;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);">Arduino</span>
           </div>
         </div>
-        <div class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;transition:border-color .3s,transform .3s;">
+        <div data-reveal class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:26px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1.5px;color:var(--mute);text-transform:uppercase;margin-bottom:18px;">ml &amp; robotics</div>
           <div style="display:flex;flex-wrap:wrap;gap:10px;">
             <span style="font-family:'JetBrains Mono',monospace;font-size:13px;padding:7px 13px;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);">PPO</span>
@@ -272,19 +307,19 @@
               <li style="display:flex;gap:11px;align-items:flex-start;"><span style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:12px;margin-top:3px;">▸</span><span style="font-size:14.5px;color:var(--text);line-height:1.5;">Custom MuJoCo XML scenes per terrain with unique friction values (mu)</span></li>
             </ul>
             <div style="display:flex;flex-wrap:wrap;gap:14px;">
-              <div style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
+              <div data-reveal style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
                 <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:26px;color:var(--accent);line-height:1;">7×</div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--mute);margin-top:8px;text-transform:uppercase;">flood traversal</div>
               </div>
-              <div style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
+              <div data-reveal style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
                 <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:26px;color:var(--accent);line-height:1;">0</div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--mute);margin-top:8px;text-transform:uppercase;">falls · all scenes</div>
               </div>
-              <div style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
+              <div data-reveal style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
                 <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:26px;color:var(--accent);line-height:1;">0.6 m/s</div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--mute);margin-top:8px;text-transform:uppercase;">flat-ground trot</div>
               </div>
-              <div style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
+              <div data-reveal style="flex:1;min-width:110px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
                 <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:26px;color:var(--accent);line-height:1;">122m</div>
                 <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.5px;color:var(--mute);margin-top:8px;text-transform:uppercase;">vs 17m before</div>
               </div>
@@ -323,7 +358,7 @@
         <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;margin:0;">Experience</h2>
       </div>
       <div style="display:flex;flex-direction:column;gap:0;">
-        <div style="display:grid;grid-template-columns:200px 1fr;gap:28px;padding:26px 0;border-top:1px solid var(--border);" class="exprow">
+        <div data-reveal style="display:grid;grid-template-columns:200px 1fr;gap:28px;padding:26px 0;border-top:1px solid var(--border);" class="exprow">
           <div>
             <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent);letter-spacing:.5px;">Mar–Oct 2025</div>
             <div style="font-size:13px;color:var(--mute);margin-top:6px;">Uniccon Group · Abuja</div>
@@ -333,7 +368,7 @@
             <p style="font-size:14.5px;line-height:1.6;color:var(--dim);margin:0;text-wrap:pretty;">Tested sensors, motors and actuators; wrote and debugged Arduino/Python for experiments; fixed hardware-software integration; calibrated sensor modules and validated control algorithms with the team.</p>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:200px 1fr;gap:28px;padding:26px 0;border-top:1px solid var(--border);" class="exprow">
+        <div data-reveal style="display:grid;grid-template-columns:200px 1fr;gap:28px;padding:26px 0;border-top:1px solid var(--border);" class="exprow">
           <div>
             <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--accent);letter-spacing:.5px;">Jul–Oct 2024</div>
             <div style="font-size:13px;color:var(--mute);margin-top:6px;">Heri Homes &amp; Properties · Port Harcourt</div>
@@ -363,7 +398,7 @@
       </div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px;" class="projgrid">
         <!-- Self-Balancing Robot -->
-        <div class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s;">
+        <div data-reveal class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
           <div style="padding:24px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:center;background:color-mix(in srgb, var(--bg) 60%, transparent);">
             <svg viewBox="0 0 120 72" width="118" height="82" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <line x1="60" y1="58" x2="60" y2="8" stroke-dasharray="2 4" opacity="0.45"></line>
@@ -391,7 +426,7 @@
         </div>
 
         <!-- AI Glasses -->
-        <div class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s;">
+        <div data-reveal class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
           <div style="padding:24px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:center;background:color-mix(in srgb, var(--bg) 60%, transparent);">
             <svg viewBox="0 0 120 72" width="118" height="82" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <rect x="16" y="30" width="34" height="20" rx="9"></rect>
@@ -420,7 +455,7 @@
         </div>
 
         <!-- Facial Door Recognition -->
-        <div class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s;">
+        <div data-reveal class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
           <div style="padding:24px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:center;background:color-mix(in srgb, var(--bg) 60%, transparent);">
             <svg viewBox="0 0 120 72" width="118" height="82" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <rect x="34" y="6" width="46" height="60" rx="3"></rect>
@@ -449,7 +484,7 @@
         </div>
 
         <!-- Line-Following Robot -->
-        <div class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s,transform .3s;">
+        <div data-reveal class="card-hover" style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
           <div style="padding:24px 24px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:center;background:color-mix(in srgb, var(--bg) 60%, transparent);">
             <svg viewBox="0 0 120 72" width="118" height="82" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M8 58 Q34 42 58 54 T112 50" stroke-width="1.9" opacity="0.75"></path>
@@ -485,22 +520,22 @@
         <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;margin:0;">Achievements</h2>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" class="achgrid">
-        <div class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);transition:border-color .3s;">
+        <div data-reveal class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);">
           <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--accent);white-space:nowrap;">2nd</span>
           <span style="width:1px;align-self:stretch;background:var(--border);"></span>
           <span style="font-size:14.5px;color:var(--text);line-height:1.4;">SHENOVATION Hackathon 2025: AI assistive device simulation</span>
         </div>
-        <div class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);transition:border-color .3s;">
+        <div data-reveal class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);">
           <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--accent);white-space:nowrap;">Finalist</span>
           <span style="width:1px;align-self:stretch;background:var(--border);"></span>
           <span style="font-size:14.5px;color:var(--text);line-height:1.4;">Pan African Robotics Competition 2024</span>
         </div>
-        <div class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);transition:border-color .3s;">
+        <div data-reveal class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);">
           <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--accent);white-space:nowrap;">Lead</span>
           <span style="width:1px;align-self:stretch;background:var(--border);"></span>
           <span style="font-size:14.5px;color:var(--text);line-height:1.4;">Robotics &amp; AI Innovators Network, Covenant University (2025–26)</span>
         </div>
-        <div class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);transition:border-color .3s;">
+        <div data-reveal class="ach-item" style="display:flex;gap:16px;align-items:center;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--surface);">
           <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--accent);white-space:nowrap;">Lead</span>
           <span style="width:1px;align-self:stretch;background:var(--border);"></span>
           <span style="font-size:14.5px;color:var(--text);line-height:1.4;">Google Developer Groups on Campus, Covenant University (2025–26)</span>
@@ -517,12 +552,12 @@
         <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(30px,4vw,44px);letter-spacing:-.02em;margin:0;">Education</h2>
       </div>
       <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:28px;" class="edugrid">
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;">
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
             <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:21px;margin:0;">B.Eng. Computer Engineering</h3>
             <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);">2021–2026</span>
           </div>
-          <p style="font-size:15px;color:var(--dim);margin:0 0 18px;">Covenant University, Ota · <span style="color:var(--text);">CGPA 4.20/5.00</span></p>
+          <p style="font-size:15px;color:var(--dim);margin:0 0 18px;">Covenant University, Ota</p>
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;margin-bottom:10px;">coursework</div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;">
             <span style="font-size:13px;color:var(--text);padding:5px 11px;border-radius:7px;background:var(--bg);border:1px solid var(--border);">Control Systems</span>
@@ -531,7 +566,7 @@
             <span style="font-size:13px;color:var(--text);padding:5px 11px;border-radius:7px;background:var(--bg);border:1px solid var(--border);">AI &amp; Machine Learning</span>
           </div>
         </div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;">
+        <div data-reveal style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--mute);text-transform:uppercase;margin-bottom:16px;">certifications</div>
           <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;">
             <li style="display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:var(--text);"><span style="color:var(--accent);margin-top:1px;">✦</span>Cisco IT Essentials</li>
@@ -604,6 +639,29 @@
     applyThemeLabel();
   });
 
+  // ---- mobile menu ----
+  var menuToggle = document.getElementById('menuToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var menuIconOpen = document.getElementById('menuIconOpen');
+  var menuIconClose = document.getElementById('menuIconClose');
+  var menuOpen = false;
+  function setMenu(open){
+    menuOpen = open;
+    mobileMenu.style.transform = open ? 'translateY(0)' : 'translateY(-100%)';
+    mobileMenu.style.opacity = open ? '1' : '0';
+    mobileMenu.style.pointerEvents = open ? 'auto' : 'none';
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuIconOpen.style.display = open ? 'none' : 'block';
+    menuIconClose.style.display = open ? 'block' : 'none';
+  }
+  menuToggle.addEventListener('click', function(){ setMenu(!menuOpen); });
+  Array.prototype.slice.call(mobileMenu.querySelectorAll('a')).forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
+  });
+  window.addEventListener('resize', function(){
+    if (window.innerWidth > 760 && menuOpen) setMenu(false);
+  });
+
   // ---- live telemetry ----
   var velEl = document.getElementById('vel');
   var muEl = document.getElementById('mu');
@@ -625,19 +683,22 @@
     gaitEl.textContent = gaits[Math.floor(Math.random() * gaits.length)];
   }, 5200);
 
-  // ---- scroll progress ----
+  // ---- scroll progress + nav elevation ----
   var progressFill = document.getElementById('progressFill');
+  var mainNav = document.getElementById('mainNav');
   function updateProgress(){
     var h = document.documentElement;
     var max = h.scrollHeight - h.clientHeight;
     var p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
     progressFill.style.transform = 'scaleX(' + p + ')';
+    mainNav.classList.toggle('scrolled', h.scrollTop > 8);
   }
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
-  // ---- active section (side nav) ----
+  // ---- active section (top nav + side nav) ----
   var navDots = Array.prototype.slice.call(document.querySelectorAll('.navdot'));
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.navlink'));
   var sectionIds = ['home', 'about', 'skills', 'projects', 'achievements', 'contact'];
   if ('IntersectionObserver' in window) {
     var navObserver = new IntersectionObserver(function(entries){
@@ -645,6 +706,9 @@
         if (entry.isIntersecting) {
           navDots.forEach(function(dot){
             dot.classList.toggle('active', dot.getAttribute('data-id') === entry.target.id);
+          });
+          navLinks.forEach(function(link){
+            link.classList.toggle('active', link.getAttribute('data-target') === entry.target.id);
           });
         }
       });
